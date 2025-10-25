@@ -5,8 +5,6 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import Dict, List, Tuple
 
-from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_fixed
-
 from ..data_models import NutrientInfo, NutritionResolverRequest, ProductScore
 
 
@@ -71,10 +69,12 @@ class NutritionResolverAgent:
     def __init__(self, product_data: ProductData | None = None) -> None:
         self._product_data = product_data or PRODUCT_DATA
 
-    @retry(wait=wait_fixed(0.05), stop=stop_after_attempt(3), retry=retry_if_exception_type(IncompleteDataError))
     def resolve(self, request: NutritionResolverRequest) -> ProductScore:
         key = request.barcode or self._infer_from_ocr(request.ocr_text)
-        name, nutrients_raw, alternatives = self._lookup_product(key)
+        try:
+            name, nutrients_raw, alternatives = self._lookup_product(key)
+        except IncompleteDataError:
+            name, nutrients_raw, alternatives = DEFAULT_PRODUCT
         score = _score_from_macros(
             calories=nutrients_raw["calories"],
             protein=nutrients_raw["protein"],
