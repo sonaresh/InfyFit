@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "InfyFit",
+    "slug": "infyfit",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "infyfit",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "backgroundColor": "#101828"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.infyfit.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "InfyFit uses the camera to scan meals and product labels.",
+        "NSPhotoLibraryUsageDescription": "InfyFit lets you optionally choose photos for nutrition analysis.",
+        "NSHealthShareUsageDescription": "InfyFit reads your activity and nutrition data to personalize insights.",
+        "NSHealthUpdateUsageDescription": "InfyFit writes workouts you complete for a full wellness view."
+      }
+    },
+    "android": {
+      "package": "com.infyfit.app",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "POST_NOTIFICATIONS"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#101828"
+      }
+    },
+    "plugins": [
+      "expo-camera",
+      "expo-barcode-scanner",
+      "expo-notifications",
+      ["expo-build-properties", {
+        "ios": {
+          "useFrameworks": "static"
+        }
+      }]
+    ],
+    "extra": {
+      "apiBaseUrl": "http://localhost:8000",
+      "eas": {
+        "projectId": "cd9ea7fe-bf4a-4dea-b9ba-8d564ca2d64d"
+      }
+    }
+  }
+}
